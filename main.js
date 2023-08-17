@@ -23,10 +23,14 @@ xPos = 100;
 yPos = 200;
 grav = 2;
 
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 var pipe = [];
 pipe[0] = {
     x: canvas.width,
-    y: 0
+    y: -167
 }
 
 function draw() {
@@ -44,12 +48,13 @@ function draw() {
 
         ctx.drawImage(pipeUp, pipe[i].x, pipe[i].y);
         ctx.drawImage(pipeBottom, pipe[i].x, pipe[i].y + pipeUp.height + gap);
-        pipe[i].x --;
+        pipe[i].x -= 2;
 
-        if(pipe[i].x == 240) {
+        if(pipe[i].x == 260) {
+            var y = Math.min(pipe[i].y + randomIntFromInterval(-100, 100), 0.8*pipeUp.height);
             pipe.push({
                 x: canvas.width,
-                y: Math.floor(Math.random() * pipeUp.height) - pipeUp.height
+                y: y = Math.max(y, -0.8*pipeUp.height)
             });
         }
 
